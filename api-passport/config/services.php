@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    
+    'github' => [
+    'client_id' => env('GITHUB_CLIENT_ID'), // 从 .env 文件中获取
+    'client_secret' => env('GITHUB_CLIENT_SECRET'), // 从 .env 文件中获取
+    'redirect' => env('GITHUB_REDIRECT'), // 重定向 URL
+    ],
 
 ];
