@@ -53,7 +53,7 @@ public function login(Request $request)
         // $user->api_token = $token;
         $user->save();
 
-        return response()->json(200);
+        return response()->json($user);
     } else {
         return response()->json(['error' => 'Unauthorized'], 401);
     }

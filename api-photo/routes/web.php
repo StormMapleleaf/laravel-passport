@@ -24,14 +24,20 @@ $router->options('/api/login', function() {
                      ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 });
 
+
 $router->group(['middleware' => 'cors'], function () use ($router) {
     $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('register', 'AuthController@register');
         $router->post('login', 'AuthController@login');
+        $router->get('user', 'UserController@getUser');
     
         $router->group(['middleware' => 'auth'], function () use ($router) {
             $router->get('photos', 'PhotoController@index');
             $router->post('photos', 'PhotoController@store');
         });
     });
+    // routes/web.php
+
+
+
 });

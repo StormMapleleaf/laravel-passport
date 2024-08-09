@@ -18,17 +18,29 @@ const Login: React.FC = () => {
                 email,
                 password,
             });
-             const token = response.data.token;
-             localStorage.setItem('token', token);
-             
-            setMessage('登录成功');
-            navigate('/home'); // 跳转到主页或其他你想跳转的页面
-
+            
+            console.log('Login response:', response.data); // 调试信息
+    
+            // const { token, user } = response.data; // 确保 `user` 存在
+            const user_id = response.data.user_id;
+            
+            if (user_id) {
+                // localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user_id)); // 保存用户
+                
+                console.log('Saved user:', user_id); // 调试信息
+                
+                setMessage('登录成功');
+                navigate('/home'); // 跳转到主页或其他页面
+            } else {
+                setMessage('用户信息缺失');
+            }
         } catch (error) {
+            console.error('Login error:', error); // 记录详细错误
             setMessage('登录失败');
         }
     };
-
+    
     return (
         <div className={styles.container}>
             <div className={styles.loginForm}>

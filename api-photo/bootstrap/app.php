@@ -27,10 +27,6 @@ $app->withFacades();
 
 $app->withEloquent();
 
-$app->routeMiddleware([
-    'cors' => App\Http\Middleware\CorsMiddleware::class,
-]);
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -82,6 +78,11 @@ $app->middleware([
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+]);
+
+
+$app->routeMiddleware([
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 /*
