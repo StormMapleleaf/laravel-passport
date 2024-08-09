@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\ClientApplicationController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,3 +31,7 @@ Route::prefix('client')->namespace('App\Http\Controllers\Auth')->group(function 
     Route::post('/update', 'ClientController@update');
     Route::post('/delete', 'ClientController@delete');
 });
+
+Route::post('/applylist', 'App\Http\Controllers\ClientApplicationController@index');
+Route::post('/applycreate','App\Http\Controllers\ClientApplicationController@store');
+Route::post('/applyupdate','App\Http\Controllers\ClientApplicationController@update');
