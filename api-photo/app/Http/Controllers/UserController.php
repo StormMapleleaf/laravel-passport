@@ -11,10 +11,11 @@ class UserController extends Controller
 {
     public function getUser(Request $request)
     {
-        $userId = $request->query('user_id'); // 从请求中获取 user_id 参数
-
+        // $userId = $request->query('user_id'); // 从请求中获取 user_id 参数
+        $userId = $request->input('user_id'); // 从请求中获取 user_id 参数
         // 验证 user_id 是否存在
         if (!$userId) {
+            // dd($userId);
             return response()->json(['error' => 'User ID is required'], 400);
         }
 

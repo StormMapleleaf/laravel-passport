@@ -23,10 +23,8 @@ const Home: React.FC = () => {
             const userId = user;
 
             try {
-                const response = await axios.get(`/api/user?user_id=${userId}`, {
-                    // headers: {
-                    //     Authorization: `Bearer ${token}` // 使用 token 进行认证
-                    // }
+                const response = await axios.post('/api/user', {
+                    user_id: userId
                 });
                 setUserData(response.data);
             } catch (err) {
