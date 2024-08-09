@@ -79,6 +79,11 @@ const Home: React.FC = () => {
 
     return (
         <div className="container">
+            <div className="navigation-buttons">
+                <button className="nav-button" onClick={() => window.location.href = '/apply'}>申请列表</button>
+                <button className="nav-button" onClick={() => window.location.href = '/user'}>用户管理</button>
+            </div>
+
             <h1>客户端列表</h1>
             <div className="buttons">
                 <button className="button" onClick={() => setShowForm(true)}>添加客户端</button>

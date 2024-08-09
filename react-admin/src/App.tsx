@@ -4,9 +4,8 @@ import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/home';
-import Welcome from './pages/welcome';
-
-import Hello from './components/Hello';
+// import Apply from './pages/Apply/Apply';
+import User from './pages/User/User';
 
 const App: React.FC = () => {
     return (
@@ -15,6 +14,7 @@ const App: React.FC = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/user" element={<User />} />
             </Routes>
         </Router>
     );

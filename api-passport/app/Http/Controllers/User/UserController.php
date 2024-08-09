@@ -114,4 +114,6 @@ class UserController extends Controller
         User::destroy($ids);
         return response()->json(['msg' => '删除成功']);
     }
+
+    
 }
