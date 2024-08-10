@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Typography, Spin, Alert } from 'antd';
+import axios from 'axios';
 
 const { Title, Paragraph } = Typography;
 
@@ -11,7 +12,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchUserData = () => {
+        const fetchUserData = async () => {
             const userJson = localStorage.getItem('user');
 
             if (!userJson) {
@@ -30,7 +31,44 @@ const Home = () => {
             }
         };
 
-        fetchUserData();
+        const handleAuthorizationCode = async (code: string) => {
+            try {
+                const response = await axios.post('http://localhost:8080/oauth/token', {
+                    grant_type: 'authorization_code',
+                    client_id: '4fb6f2ab-0861-4c5b-a3bc-06b482197276',
+                    client_secret: '5qDOJWbxZxSVHFyED2TyCOACqYNbbhVJuvmbqD19',
+                    redirect_uri: 'http://localhost:3000/home',
+                    code: code,
+                });
+
+                const { access_token } = response.data;
+        
+                // Assuming your backend has an endpoint to fetch user data using the access token
+                const userResponse = await axios.get('http://localhost:8080/api/user', {
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                    },
+                });
+
+                const user = userResponse.data;
+                localStorage.setItem('user', JSON.stringify(user));
+                setUserData(user);
+            } catch (err) {
+                setError('Failed to fetch user data with the authorization code');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        // Check if there is a "code" in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            handleAuthorizationCode(code);
+        } else {
+            fetchUserData();
+        }
     }, []);
 
     // Handle loading, error, and user data display

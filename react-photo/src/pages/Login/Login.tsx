@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Alert, Layout, Typography, Card } from 'antd';
 import api from '../../api/api'; 
+import AuthButton from './Other';
 
 const { Title } = Typography;
 const { Content } = Layout;
@@ -90,9 +91,10 @@ const Login: React.FC = () => {
                         </Form.Item>
                     )}
                     <Form.Item style={{ textAlign: 'center' }}>
-                        <a href="http://localhost:8080/oauth/authorize?client_id=4fb6f2ab-0861-4c5b-a3bc-06b482197276&redirect_uri=http://localhost:3000/home&response_type=code&scope=*">
+                        {/* <a href="http://localhost:8080/oath/authorize?cbc-06b482197276&redirect_uri=http://localhost:3000/home&response_type=code&scope=*">
                             第三方登录
-                        </a>
+                        </a> */}
+                        <AuthButton />
                     </Form.Item>
                 </Card>
             </Content>

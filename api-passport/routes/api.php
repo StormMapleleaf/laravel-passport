@@ -35,3 +35,4 @@ Route::prefix('client')->namespace('App\Http\Controllers\Auth')->group(function 
 Route::post('/applylist', 'App\Http\Controllers\ClientApplicationController@index');
 Route::post('/applycreate','App\Http\Controllers\ClientApplicationController@store');
 Route::post('/applyupdate','App\Http\Controllers\ClientApplicationController@update');
+
