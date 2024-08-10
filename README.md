@@ -1,14 +1,14 @@
 # Laravel--passport
 
-第三方应用程序--相册管理：3001
+react-photo-->第三方应用程序相册管理：3001
 
-passport后端：8080
+api-passport-->passport后端：8080
 
-admin后台：3000
+react-admin-->passport后台：3000
 
-apply前端：3003
+apply-->apply前端：3003
 
-pic后端：8082
+api-picture-->pic后端：8082
 
 ## 流程
 
