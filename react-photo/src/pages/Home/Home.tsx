@@ -54,7 +54,8 @@ const Home = () => {
                 localStorage.setItem('user', JSON.stringify(user));
                 setUserData(user);
             } catch (err) {
-                setError('Failed to fetch user data with the authorization code');
+                console.log('Error:', err);
+                
             } finally {
                 setLoading(false);
             }
