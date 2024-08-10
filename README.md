@@ -9,3 +9,7 @@ passport后端：8080
 admin后台：3000
 
 apply前端：3003
+
+pic后端：8082
+
+ant-pic:8000
