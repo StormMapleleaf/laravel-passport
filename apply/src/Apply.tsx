@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Form, Input, Button, Alert } from 'antd';
+import { FormInstance } from 'antd/es/form';
 
 interface FormData {
   applicant: string;
@@ -9,131 +11,88 @@ interface FormData {
 }
 
 const Apply: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    applicant: '',
-    phone_number: '',
-    client_name: '',
-    callback_url: '',
-    status: '1', // 设置默认值为 1
-  });
-
-  const [errors, setErrors] = useState({
-    applicant: '',
-    phone_number: '',
-    client_name: '',
-    callback_url: '',
-  });
-
+  const [form] = Form.useForm<FormInstance>();
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleSubmit = async (values: FormData) => {
+    try {
+      const response = await fetch('http://localhost:8080/api/applycreate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+        redirect: 'manual', // 禁用自动重定向
+      });
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.applicant) {
-      newErrors.applicant = '申请人是必填项';
-    }
-    if (!formData.phone_number) {
-      newErrors.phone_number = '电话号码是必填项';
-    }
-    if (!formData.client_name) {
-      newErrors.client_name = '客户端名称是必填项';
-    }
-    if (!formData.callback_url) {
-      newErrors.callback_url = '回调 URL 是必填项';
-    }
-
-    // setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      try {
-        const response = await fetch('http://localhost:8080/api/applycreate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-          redirect: 'manual', // 禁用自动重定向
-        });
-
-        if (response.type === 'opaqueredirect') {
-          setSubmitStatus('请求被重定向，请检查服务器配置。');
-        } else if (response.ok) {
-          setSubmitStatus('申请提交成功！');
-        } else {
-          setSubmitStatus('申请提交失败。');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setSubmitStatus('提交申请时发生错误。');
+      if (response.type === 'opaqueredirect') {
+        setSubmitStatus('请求被重定向，请检查服务器配置。');
+      } else if (response.ok) {
+        setSubmitStatus('申请提交成功！');
+        form.resetFields(); // 清空表单
+      } else {
+        setSubmitStatus('申请提交失败。');
       }
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitStatus('提交申请时发生错误。');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          申请人:
-          <input
-            type="text"
-            name="applicant"
-            value={formData.applicant}
-            onChange={handleChange}
-          />
-          {errors.applicant && <span className="error">{errors.applicant}</span>}
-        </label>
-      </div>
-      <div>
-        <label>
-          电话号码:
-          <input
-            type="text"
-            name="phone_number"
-            value={formData.phone_number}
-            onChange={handleChange}
-          />
-          {errors.phone_number && <span className="error">{errors.phone_number}</span>}
-        </label>
-      </div>
-      <div>
-        <label>
-          客户端名称:
-          <input
-            type="text"
-            name="client_name"
-            value={formData.client_name}
-            onChange={handleChange}
-          />
-          {errors.client_name && <span className="error">{errors.client_name}</span>}
-        </label>
-      </div>
-      <div>
-        <label>
-          回调 URL:
-          <input
-            type="text"
-            name="callback_url"
-            value={formData.callback_url}
-            onChange={handleChange}
-          />
-          {errors.callback_url && (
-            <span className="error">{errors.callback_url}</span>
-          )}
-        </label>
-      </div>
-      <button type="submit">提交申请</button>
-      {submitStatus && <p>{submitStatus}</p>}
-    </form>
+    <div style={{ padding: 20 }}>
+      <Form
+        // form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        initialValues={{ status: '1' }} // 设置默认值为 1
+      >
+        <Form.Item
+          label="申请人"
+          name="applicant"
+          rules={[{ required: true, message: '申请人是必填项' }]}
+        >
+          <Input placeholder="请输入申请人姓名" />
+        </Form.Item>
+        
+        <Form.Item
+          label="电话号码"
+          name="phone_number"
+          rules={[{ required: true, message: '电话号码是必填项' }]}
+        >
+          <Input placeholder="请输入电话号码" />
+        </Form.Item>
+
+        <Form.Item
+          label="客户端名称"
+          name="client_name"
+          rules={[{ required: true, message: '客户端名称是必填项' }]}
+        >
+          <Input placeholder="请输入客户端名称" />
+        </Form.Item>
+
+        <Form.Item
+          label="回调 URL"
+          name="callback_url"
+          rules={[{ required: true, message: '回调 URL 是必填项' }]}
+        >
+          <Input placeholder="请输入回调 URL" />
+        </Form.Item>
+
+        <Form.Item
+          name="status"
+          initialValue="1"
+        >
+          <Input type="hidden" />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">提交申请</Button>
+        </Form.Item>
+
+        {submitStatus && <Alert message={submitStatus} type={submitStatus.includes('成功') ? 'success' : 'error'} showIcon />}
+      </Form>
+    </div>
   );
 };
 

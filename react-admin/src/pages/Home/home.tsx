@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './Home.css';
-import api from '../../api/api'; 
+import { Button, Form, Input, Modal, Table, Typography, Spin, Alert } from 'antd';
+import api from '../../api/api';
+
+const { Title } = Typography;
 
 interface Client {
     id: string;
@@ -21,10 +23,7 @@ const Home: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const [showForm, setShowForm] = useState(false);
-    const [newClient, setNewClient] = useState({
-        name: '',
-        redirect: '',
-    });
+    const [newClient, setNewClient] = useState({ name: '', redirect: '' });
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -48,8 +47,8 @@ const Home: React.FC = () => {
                 redirect: newClient.redirect,
             });
             setClients([...clients, response.data]);
-            setShowForm(false); // 关闭表单
-            setNewClient({ name: '', redirect: '' }); // 清空表单
+            setShowForm(false);
+            setNewClient({ name: '', redirect: '' });
         } catch (err) {
             setError('添加客户端失败');
         }
@@ -57,9 +56,7 @@ const Home: React.FC = () => {
 
     const handleDeleteClient = async (id: string) => {
         try {
-            await api.post('/client/delete', {
-                id: [id]  // 以数组形式发送 ID
-            });
+            await api.post('/client/delete', { id: [id] });
             setClients(clients.filter(client => client.id !== id));
         } catch (err) {
             setError('Failed to delete client');
@@ -74,96 +71,75 @@ const Home: React.FC = () => {
         }));
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    const columns = [
+        { title: 'ID', dataIndex: 'id', key: 'id' },
+        { title: '客户端', dataIndex: 'name', key: 'name' },
+        { title: '重定向地址', dataIndex: 'redirect', key: 'redirect' },
+        { title: 'Personal Access Client', dataIndex: 'personal_access_client', key: 'personal_access_client', render: (text: boolean) => (text ? 'Yes' : 'No') },
+        { title: 'Password Client', dataIndex: 'password_client', key: 'password_client', render: (text: boolean) => (text ? 'Yes' : 'No') },
+        { title: 'Revoked', dataIndex: 'revoked', key: 'revoked', render: (text: boolean) => (text ? 'Yes' : 'No') },
+        { title: '创建时间', dataIndex: 'created_at', key: 'created_at', render: (text: string) => new Date(text).toLocaleString() },
+        { title: '更新时间', dataIndex: 'updated_at', key: 'updated_at', render: (text: string) => new Date(text).toLocaleString() },
+        {
+            title: '操作',
+            key: 'action',
+            render: (_: any, record: Client) => (
+                <Button type="link" danger onClick={() => handleDeleteClient(record.id)}>
+                    删除
+                </Button>
+            ),
+        },
+    ];
+
+    if (loading) return <Spin size="large" />;
+    if (error) return <Alert message={error} type="error" showIcon />;
 
     return (
-        <div className="container">
-            <div className="navigation-buttons">
-                <button className="nav-button" onClick={() => window.location.href = '/apply'}>申请列表</button>
-                <button className="nav-button" onClick={() => window.location.href = '/user'}>用户管理</button>
+        <div style={{ padding: 20 }}>
+            <div style={{ marginBottom: 20 }}>
+                <Button type="primary" onClick={() => window.location.href = '/apply'} style={{ marginRight: 10 }}>申请列表</Button>
+                <Button type="primary" onClick={() => window.location.href = '/user'}>用户管理</Button>
             </div>
 
-            <h1>客户端列表</h1>
-            <div className="buttons">
-                <button className="button" onClick={() => setShowForm(true)}>添加客户端</button>
-            </div>
+            <Title level={1}>客户端列表</Title>
+            <Button type="primary" onClick={() => setShowForm(true)} style={{ marginBottom: 20 }}>添加客户端</Button>
 
-            {showForm && (
-                <div className="form-container">
-                    <h2>添加客户端</h2>
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        handleAddClient();
-                    }}>
-                        <div className="form-group">
-                            <label htmlFor="name">名称</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={newClient.name}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="redirect">重定向 URL</label>
-                            <input
-                                type="url"
-                                id="redirect"
-                                name="redirect"
-                                value={newClient.redirect}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="button">提交</button>
-                        <button
-                            type="button"
-                            className="button cancel"
-                            onClick={() => {
-                                setShowForm(false);
-                                setNewClient({ name: '', redirect: '' });
-                            }}
-                        >
-                            取消
-                        </button>
-                    </form>
-                </div>
-            )}
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>客户端</th>
-                        <th>重定向地址</th>
-                        <th>Personal Access Client</th>
-                        <th>Password Client</th>
-                        <th>Revoked</th>
-                        <th>创建时间</th>
-                        <th>更新时间</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {clients.map(client => (
-                        <tr key={client.id}>
-                            <td>{client.id}</td>
-                            <td>{client.name}</td>
-                            <td>{client.redirect}</td>
-                            <td>{client.personal_access_client ? 'Yes' : 'No'}</td>
-                            <td>{client.password_client ? 'Yes' : 'No'}</td>
-                            <td>{client.revoked ? 'Yes' : 'No'}</td>
-                            <td>{new Date(client.created_at).toLocaleString()}</td>
-                            <td>{new Date(client.updated_at).toLocaleString()}</td>
-                            <td>
-                                <button className="button delete" onClick={() => handleDeleteClient(client.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table columns={columns} dataSource={clients} rowKey="id" />
+
+            <Modal
+                title="添加客户端"
+                visible={showForm}
+                onOk={handleAddClient}
+                onCancel={() => setShowForm(false)}
+                okText="提交"
+                cancelText="取消"
+            >
+                <Form layout="vertical" onFinish={handleAddClient}>
+                    <Form.Item
+                        label="名称"
+                        name="name"
+                        rules={[{ required: true, message: '请输入客户端名称!' }]}
+                    >
+                        <Input
+                            value={newClient.name}
+                            onChange={handleInputChange}
+                            name="name"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="重定向 URL"
+                        name="redirect"
+                        rules={[{ required: true, message: '请输入重定向 URL!' }]}
+                    >
+                        <Input
+                            type="url"
+                            value={newClient.redirect}
+                            onChange={handleInputChange}
+                            name="redirect"
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     );
 };

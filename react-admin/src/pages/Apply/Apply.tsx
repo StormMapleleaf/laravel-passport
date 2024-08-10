@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button, Table, Select, Typography, Spin, Alert } from 'antd';
+import { ColumnsType } from 'antd/es/table';
 import './Apply.css';
+
+const { Title } = Typography;
+const { Option } = Select;
 
 interface ClientApplication {
     id: number;
@@ -15,16 +20,20 @@ interface ClientApplication {
 
 const Apply: React.FC = () => {
     const [applications, setApplications] = useState<ClientApplication[]>([]);
-    const navigate = useNavigate(); // 使用 useNavigate 钩子
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Replace with your API endpoint
         axios.post('http://localhost:8080/api/applylist')
             .then(response => {
                 setApplications(response.data);
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                setError('Error fetching data');
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }, []);
 
@@ -33,7 +42,7 @@ const Apply: React.FC = () => {
             id: id,
             status: newStatus
         })
-        .then(response => {
+        .then(() => {
             setApplications(prevApplications =>
                 prevApplications.map(app =>
                     app.id === id ? { ...app, status: newStatus } : app
@@ -41,57 +50,62 @@ const Apply: React.FC = () => {
             );
         })
         .catch(error => {
-            console.error('Error updating status:', error);
+            setError('Error updating status');
         });
     };
 
+    const columns: ColumnsType<ClientApplication> = [
+        { title: 'ID', dataIndex: 'id', key: 'id' },
+        { title: '申请人', dataIndex: 'applicant', key: 'applicant' },
+        { title: '电话号码', dataIndex: 'phone_number', key: 'phone_number' },
+        { title: '客户端名称', dataIndex: 'client_name', key: 'client_name' },
+        { 
+            title: '回调地址', 
+            dataIndex: 'callback_url', 
+            key: 'callback_url',
+            render: (text: string) => (
+                <a href={text} target="_blank" rel="noopener noreferrer">{text}</a>
+            )
+        },
+        { 
+            title: '申请时间', 
+            dataIndex: 'created_at', 
+            key: 'created_at',
+            render: (text: string) => new Date(text).toLocaleString()
+        },
+        { 
+            title: '状态', 
+            dataIndex: 'status', 
+            key: 'status',
+            render: (status: number, record: ClientApplication) => (
+                <Select
+                    value={status}
+                    onChange={(value) => handleStatusChange(record.id, value)}
+                    style={{ width: 120 }}
+                >
+                    <Option value={1}>待审批</Option>
+                    <Option value={2}>已通过</Option>
+                    <Option value={3}>未通过</Option>
+                </Select>
+            )
+        },
+    ];
+
+    if (loading) return <Spin size="large" />;
+    if (error) return <Alert message={error} type="error" showIcon />;
+
     return (
-        <div className="container">
-            <h1>申请列表</h1>
-            <div className="buttons">
-                <button className="button" onClick={() => navigate('/home')}>回到首页</button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                    <th>ID</th>
-                    <th>申请人</th>
-                    <th>电话号码</th>
-                    <th>客户端名称</th>
-                    <th>回调地址</th>
-                    <th>申请时间</th>
-                    <th>状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {applications.map(application => (
-                        <tr key={application.id}>
-                            <td>{application.id}</td>
-                            <td>{application.applicant}</td>
-                            <td>{application.phone_number}</td>
-                            <td>{application.client_name}</td>
-                            <td><a href={application.callback_url} target="_blank" rel="noopener noreferrer">{application.callback_url}</a></td>
-
-                            <td>{new Date(application.created_at).toLocaleString()}</td>
-                            <td>
-                            <div className="form-group">
-                                <select
-                                    id="status"
-                                    value={application.status}
-                                    onChange={(e) => handleStatusChange(application.id, parseInt(e.target.value))}
-                                    className="status-select"
-                                >
-                                    <option value={1}>待审批</option>
-                                    <option value={2}>已通过</option>
-                                    <option value={3}>未通过</option>
-                                </select>
-                            </div>
-                            </td>
-
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div style={{ padding: 20 }}>
+            <Title level={1}>申请列表</Title>
+            <Button type="primary" onClick={() => navigate('/home')} style={{ marginBottom: 20 }}>
+                回到首页
+            </Button>
+            <Table 
+                columns={columns} 
+                dataSource={applications} 
+                rowKey="id" 
+                pagination={{ pageSize: 10 }}
+            />
         </div>
     );
 };

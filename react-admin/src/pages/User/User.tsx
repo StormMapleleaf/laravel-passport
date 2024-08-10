@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Table, Spin, Typography, Alert } from 'antd';
 import api from '../../api/api'; // 确保 api 配置正确
+
+const { Title } = Typography;
 
 interface User {
     id: number;
@@ -15,7 +18,7 @@ const User: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate(); // 使用 useNavigate 钩子
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -32,37 +35,51 @@ const User: React.FC = () => {
         fetchUsers();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: '名称',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: '电子邮件',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (text: string) => new Date(text).toLocaleString(),
+        },
+        {
+            title: '更新时间',
+            dataIndex: 'updated_at',
+            key: 'updated_at',
+            render: (text: string) => new Date(text).toLocaleString(),
+        },
+    ];
+
+    if (loading) return <Spin size="large" />;
+    if (error) return <Alert message={error} type="error" showIcon />;
 
     return (
-        <div className="container">
-            <h1>用户列表</h1>
-            <div className="buttons">
-                <button className="button" onClick={() => navigate('/home')}>回到首页</button>
+        <div style={{ padding: 20 }}>
+            <Title level={1}>用户列表</Title>
+            <div style={{ marginBottom: 20 }}>
+                <Button type="primary" onClick={() => navigate('/home')}>回到首页</Button>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>名称</th>
-                        <th>电子邮件</th>
-                        <th>创建时间</th>
-                        <th>更新时间</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{new Date(user.created_at).toLocaleString()}</td>
-                            <td>{new Date(user.updated_at).toLocaleString()}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table
+                columns={columns}
+                dataSource={users}
+                rowKey="id"
+                pagination={{ pageSize: 10 }}
+            />
         </div>
     );
 };

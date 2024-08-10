@@ -90,7 +90,7 @@ const Login: React.FC = () => {
                         </Form.Item>
                     )}
                     <Form.Item style={{ textAlign: 'center' }}>
-                        <a href="http://localhost:8080/oauth/authorize?client_id=9cb0c3b1-b5f3-475a-8a0b-17934bee2d99&redirect_uri=http://localhost:3000/home&response_type=code&scope=*">
+                        <a href="http://localhost:8080/oauth/authorize?client_id=4fb6f2ab-0861-4c5b-a3bc-06b482197276&redirect_uri=http://localhost:3000/home&response_type=code&scope=*">
                             第三方登录
                         </a>
                     </Form.Item>
