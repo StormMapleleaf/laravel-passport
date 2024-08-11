@@ -35,8 +35,8 @@ const Home = () => {
             try {
                 const response = await axios.post('http://localhost:8080/oauth/token', {
                     grant_type: 'authorization_code',
-                    client_id: '4fb6f2ab-0861-4c5b-a3bc-06b482197276',
-                    client_secret: '5qDOJWbxZxSVHFyED2TyCOACqYNbbhVJuvmbqD19',
+                    client_id: 'ad46c0d9-77f4-43f4-969c-7f640b990698',
+                    client_secret: 'ZGqWEkaIRxIz74tw3G08ToGVebqWMz2sUEHh8epk',
                     redirect_uri: 'http://localhost:3000/home',
                     code: code,
                 });

@@ -2,7 +2,7 @@ import React from 'react';
 
 const AuthButton = () => {
     const handleAuth = () => {
-        const clientId = '4fb6f2ab-0861-4c5b-a3bc-06b482197276';
+        const clientId = 'ad46c0d9-77f4-43f4-969c-7f640b990698';
         const redirectUri = 'http://localhost:3000/home';
         const responseType = 'code';
         const scope = '*';
