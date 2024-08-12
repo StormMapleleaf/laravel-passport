@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Typography, Spin, Alert } from 'antd';
 import axios from 'axios';
+import Password from 'antd/es/input/Password';
 
 const { Title, Paragraph } = Typography;
 
@@ -53,6 +54,13 @@ const Home = () => {
                 const user = userResponse.data;
                 localStorage.setItem('user', JSON.stringify(user));
                 setUserData(user);
+                // console.log('User data:', user);
+                const register = await axios.post('http://localhost:8082/api/register', {
+                    // id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    password: 'test',
+                });
             } catch (err) {
                 console.log('Error:', err);
                 

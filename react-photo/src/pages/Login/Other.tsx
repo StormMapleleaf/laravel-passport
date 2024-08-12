@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 const AuthButton = () => {
     const handleAuth = () => {
@@ -11,7 +12,11 @@ const AuthButton = () => {
         window.location.href = authUrl;
     };
 
-    return <button onClick={handleAuth}>第三方登录</button>;
+    return (
+        <Button type="primary" onClick={handleAuth}>
+            第三方登录
+        </Button>
+    );
 };
 
 export default AuthButton;
