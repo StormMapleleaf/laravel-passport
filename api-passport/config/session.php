@@ -127,12 +127,10 @@ return [
     |
     */
 
-    // 'cookie' => env(
-    //     'SESSION_COOKIE',
-    //     Str::slug(env('APP_NAME', 'laravel'), '_').'_session_'
-    // ),
-    'cookie' => Str::random(10),
-
+    'cookie' => env(
+        'SESSION_COOKIE',
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+    ),
 
     /*
     |--------------------------------------------------------------------------
