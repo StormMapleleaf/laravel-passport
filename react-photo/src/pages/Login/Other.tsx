@@ -3,7 +3,7 @@ import { Button } from 'antd';
 
 const AuthButton = () => {
     const handleAuth = () => {
-        const clientId = 'ad46c0d9-77f4-43f4-969c-7f640b990698';
+        const clientId = '48421d47-8e20-4cbb-a487-24bdcfb2081d';
         const redirectUri = 'http://localhost:3000/home';
         const responseType = 'code';
         const scope = '*';
