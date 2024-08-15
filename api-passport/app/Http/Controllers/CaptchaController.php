@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\ImageManager;
 
 class CaptchaController extends Controller
 {
@@ -23,4 +24,6 @@ class CaptchaController extends Controller
         imagepng($image);
         imagedestroy($image);
     }
+
+
 }
