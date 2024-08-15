@@ -4,6 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+        <div class="text-center mb-4">
+                <!-- Logo 图片 -->
+                <img src="{{ asset('jhun.png') }}" alt="Logo" style="max-width: 150px; height: auto;">
+            </div>
             <div class="card">
                 <div class="card-header">{{ __('欢迎进入江汉大学授权认证中心') }}</div>
 

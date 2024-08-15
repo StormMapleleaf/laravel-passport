@@ -39,16 +39,11 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
-                            <label for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</label>
-
-                            <div class="col-md-6">
-                                <div class="captcha">
-                                    <span>{!! captcha_img() !!}</span>
-                                    <button type="button" class="btn btn-success btn-refresh">Refresh</button>
-                                </div>
-                                <input id="captcha" type="text" class="form-control mt-2 @error('captcha') is-invalid @enderror" name="captcha" required>
-
+                        <div class="row mb-3">
+                            <label for="captcha" class="col-md-4 col-form-label text-md-end">{{ __('验证码') }}</label>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <img src="{{ url('/captcha') }}" alt="验证码" class="img-fluid me-2" style="max-width: 120px; height: auto;">
+                                <input id="captcha" type="text" class="form-control @error('captcha') is-invalid @enderror" name="captcha" required>
                                 @error('captcha')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

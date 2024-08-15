@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My New Homepage</title>
+    <title>江汉大学授权中心</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('jhun.png') }}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; margin: 0; padding: 0;">
 
@@ -16,7 +20,10 @@
     </a>
 </header>
 
-<div id="app" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
+<div id="app" style="display: flex; flex-direction: column; align-items: center; max-width: 1200px; margin: 20px auto; padding: 20px;">
+    <!-- Center Logo -->
+    <img src="{{ asset('jhun.png') }}" alt="Logo" style="max-width: 150px; height: auto; margin-bottom: 20px;">
+
     <h1 style="text-align: center; color: #333; font-size: 2rem; margin-top: 20px;">
         欢迎进入江汉大学授权认证中心
     </h1>
