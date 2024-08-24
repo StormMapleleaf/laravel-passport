@@ -11,7 +11,7 @@ class PhotoController extends Controller
 {
     public function getUserPhotos(Request $request)
     {
-        $userId = $request->input('user_id');
+        $userId = 4;
 
         // 验证 user_id 是否存在
         if (!$userId) {
