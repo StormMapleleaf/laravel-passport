@@ -36,3 +36,7 @@ Route::post('/applylist', 'App\Http\Controllers\ClientApplicationController@inde
 Route::post('/applycreate','App\Http\Controllers\ClientApplicationController@store');
 Route::post('/applyupdate','App\Http\Controllers\ClientApplicationController@update');
 
+Route::post('newsapply', 'App\Http\Controllers\News\NewsController@store');
+Route::post('/messageapply', 'App\Http\Controllers\MessageController@sendMessage');
+
+

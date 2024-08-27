@@ -3,33 +3,33 @@ version: '3.8'
 services:
     redis:
         image: redis:alpine
-        container_name: oauth-redis
+        container_name: work-redis
         # ports:
         #     - "6379:6379"
 
     postgres:
         image: postgres:latest
-        container_name: oauth-postgres
+        container_name: work-postgres
         environment:
             POSTGRES_USER: hero
             POSTGRES_PASSWORD: 123456
             POSTGRES_DB: postgres
         ports:
-            - "8196:5432"
+            - "5432:5432"
         volumes:
             - ./postgres-data:/var/lib/postgresql/data
 
     php-fpm:
 #        build: ./
         image: registry.cn-chengdu.aliyuncs.com/gabrlie/php:latest
-        container_name: oauth-php-fpm
+        container_name: work-php-fpm
         working_dir: /application
         volumes:
             - .:/application
 
     webserver:
         image: nginx:alpine
-        container_name: oauth-webserver
+        container_name: work-webserver
         working_dir: /application
         volumes:
             - .:/application
