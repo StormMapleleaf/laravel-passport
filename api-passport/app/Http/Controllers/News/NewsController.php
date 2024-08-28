@@ -5,6 +5,7 @@ namespace App\Http\Controllers\News;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 class NewsController extends Controller
 {
@@ -29,4 +30,16 @@ class NewsController extends Controller
         // 返回响应
         return response()->json(['message' => 'News created successfully', 'news' => $news], 201);
     }
+
+    public function getLatestNewsFromRedis()
+{
+    $news = Redis::get('news:latest');
+
+    if ($news) {
+        return response()->json(json_decode($news));
+    } else {
+        return response()->json(['message' => 'No news found in cache'], 404);
+    }
+}
+
 }
