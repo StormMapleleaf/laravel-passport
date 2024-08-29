@@ -13,20 +13,24 @@ const NewsList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(5); // 每页显示5条
     const [total, setTotal] = useState(0);
+    const [latestNewsId, setLatestNewsId] = useState<number>(0); // 初始化为0
 
     useEffect(() => {
-        fetchNewsFromRedis();
-    }, []);
+        fetchNews(currentPage); // 初始化时加载第一页数据
+    }, [currentPage]);
 
-    const fetchNewsFromRedis = async () => {
+    const fetchNews = async (page: number) => {
         try {
-            const response = await axios.post('http://localhost:80/api/newsshow');
+            const response = await axios.get(`http://localhost:80/api/newslist?page=${page}&latest=${latestNewsId}`);
             if (response.data) {
-                setNews(response.data);
-                setTotal(response.data.length); // 设置总条目数
+                setNews(response.data.news);
+                setTotal(response.data.totalPages * pageSize); // 根据总页数和每页数量计算总条目数
+                if (!latestNewsId) {
+                    setLatestNewsId(response.data.latestNewsId); // 保存初始的 latestNewsId
+                }
             }
         } catch (error) {
-            console.error("Error fetching news from Redis:", error);
+            console.error("Error fetching news from server:", error);
         }
     };
 
@@ -34,15 +38,12 @@ const NewsList = () => {
         setCurrentPage(page);
     };
 
-    // 计算当前页的新闻数据
-    const currentNews = news.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
     return (
         <div style={{ textAlign: 'center', padding: '20px' }}>
             <List
                 itemLayout="vertical"
                 size="large"
-                dataSource={currentNews}
+                dataSource={news}
                 renderItem={item => (
                     <List.Item key={item.id}>
                         <List.Item.Meta
@@ -63,7 +64,6 @@ const NewsList = () => {
                 <Button
                     type="primary"
                     style={{ marginTop: '20px' }}
-                    
                 >
                     查看更多
                 </Button>

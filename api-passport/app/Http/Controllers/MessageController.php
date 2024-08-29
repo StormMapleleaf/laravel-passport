@@ -10,7 +10,7 @@ use App\Models\News;
 class MessageController extends Controller
 {
     protected $listKey = 'message_queue'; // Redis 列表的键名
-    protected $threshold = 3; // 处理消息的阈值
+    protected $threshold = 1; // 处理消息的阈值
 
     // 发布消息到 Redis 列表
     public function sendMessage(Request $request)
