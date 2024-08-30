@@ -36,10 +36,14 @@ Route::post('/applylist', 'App\Http\Controllers\ClientApplicationController@inde
 Route::post('/applycreate','App\Http\Controllers\ClientApplicationController@store');
 Route::post('/applyupdate','App\Http\Controllers\ClientApplicationController@update');
 
-Route::post('/newsapply', 'App\Http\Controllers\News\NewsController@store');
+Route::post('/newsapply', 'App\Http\Controllers\MessageController@sendMessage');
+
 Route::post('/newsshow', 'App\Http\Controllers\News\NewsController@getlatestnewsfromredis');
 Route::get('/newslist', 'App\Http\Controllers\News\NewsListController@index');
 
 Route::post('/messageapply', 'App\Http\Controllers\MessageController@sendMessage');//redis
+Route::post('/messageapply2', 'App\Http\Controllers\News\NewsController@newpublish');//redis
+
+
 
 

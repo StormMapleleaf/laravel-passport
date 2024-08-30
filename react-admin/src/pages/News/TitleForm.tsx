@@ -7,7 +7,7 @@ const TitleForm = () => {
 
   const onFinish = (values: any) => {
     // 发送 POST 请求
-    axios.post('http://localhost:80/api/messageapply', values)
+    axios.post('http://localhost:80/api/messageapply2', values)
       .then((response) => {
         // 请求成功后的处理
         message.success('Title submitted successfully');
