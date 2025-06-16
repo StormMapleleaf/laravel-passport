@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Alert, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/api'; 
-import 'antd/dist/reset.css'; // 导入 Ant Design 样式
+import 'antd/dist/reset.css'; 
+import RegisterForm from './components/RegisterForm';
 
 const { Title, Link } = Typography;
 

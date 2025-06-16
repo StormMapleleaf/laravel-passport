@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd44ee96-05db-481d-8f67-fa3fe8c84dab" name="更改" comment="" />
+    <list default="true" id="bd44ee96-05db-481d-8f67-fa3fe8c84dab" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/../api-passport/nginx/application.access.log" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/nginx/application.access.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/nginx/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/nginx/error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/1259" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/1259" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16507" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16507" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16508" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16508" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16512" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/16512" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/2619" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/2619" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/base/5/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/global/2396" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/global/2396" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/global/pg_control" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/global/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/pg_stat/pgstat.stat" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/pg_stat/pgstat.stat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/pg_wal/000000010000000000000001" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/pg_wal/000000010000000000000001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-passport/postgres-data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/../api-passport/postgres-data/pg_xact/0000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react-admin/src/pages/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../react-admin/src/pages/Login/Login.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,19 +41,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/github/laravel-passport/redis数据隔离&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/github/OwnCS/软件设计/搜索设计",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -56,6 +72,7 @@
       <updated>1724542062289</updated>
       <workItem from="1724542063341" duration="451000" />
       <workItem from="1724543219713" duration="1385000" />
+      <workItem from="1726659651116" duration="33000" />
     </task>
     <servers />
   </component>
